@@ -1,0 +1,70 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sat Sep 15 18:39:27 2018
+#将所有GEI图像进行zero_masking保存到result_dir中
+@author: Administrator
+"""
+import cv2
+import matplotlib.pyplot as plt 
+import numpy as np
+import os
+
+
+#source_path = '/home/mg/code/data/GEI_CASIA_B/gei/001/bg-01/001-bg-01-000.png'
+
+#split_result = source_path.split('/',7)
+#print split_result
+#img = cv2.imread(source_path,0)
+
+#rows,cols = img.shape
+#print rows
+#print cols
+
+source_dir = '/home/mg/code/data/GEI_CASIA_B/gei/'
+second_dir = ['bg-01','bg-02','cl-01','cl-02','nm-01','nm-02','nm-03','nm-04','nm-05','nm-06']
+third_path = ['000','018','036','054','072','090','108','126','144','162','180']
+
+result_dir = '/home/mg/code/data/GEI_zero_masking/'
+
+for i in range(1,125):
+    i = '%03d' % i
+    for j in range(len(second_dir)):
+        for k in range(len(third_path)):
+            source_path = source_dir + str(i) + '/' + second_dir[j] + '/' + str(i) + '-' + second_dir[j] + '-' + third_path[k] + '.png'
+#            print source_path
+            
+            isExists = os.path.exists(source_path)
+            
+            if not isExists:
+                print('this path not exist')
+            else:
+                print('this path exists')
+                split_result = source_path.split('/',7)
+                img = cv2.imread(source_path,0)
+                img[30:150,:] = 0
+                result_path = result_dir + split_result[7]
+                cv2.imwrite(result_path,img)
+            
+            
+            
+            
+            
+
+
+
+
+
+
+
+
+
+
+#img[30:150,:] = 0
+#
+#result_path = '/home/mg/code/data/GEI_zero_masking/' + split_result[7]
+#print result_path
+#
+#cv2.imwrite(result_path,img)
+
+#cv2.imshow('source',img)
+#cv2.waitKey(0)
